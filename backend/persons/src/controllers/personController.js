@@ -121,12 +121,12 @@ const validatePersonData = (data, isPartialUpdate = false) => {
 const checkDocumentExists = async (ndocument, excludeId = null) => {
   try {
     const existingPersons = await readRecords(TABLE, { ndocument });
-    
+
     if (excludeId) {
       // Para actualizaciones, excluir la persona actual
       return existingPersons.some(person => person.id !== excludeId);
     }
-    
+
     // Para creación, cualquier coincidencia es un duplicado
     return existingPersons.length > 0;
   } catch (error) {
