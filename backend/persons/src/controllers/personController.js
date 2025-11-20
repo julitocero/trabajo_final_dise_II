@@ -149,9 +149,12 @@ export const createPerson = async (req, res, next) => {
       cel
     } = req.body;
 
+    console.log('Intento de crear persona:', fname, lname, '- Documento:', tdocument, ndocument);
+
     // Validar datos
     const validationErrors = validatePersonData(req.body);
     if (validationErrors.length > 0) {
+      console.log('Errores de validación:', validationErrors);
       return res.status(400).json({
         success: false,
         message: 'Errores de validación',
@@ -162,6 +165,7 @@ export const createPerson = async (req, res, next) => {
     // Verificar si ya existe una persona con el mismo número de documento
     const documentExists = await checkDocumentExists(ndocument);
     if (documentExists) {
+      console.log('Documento duplicado:', ndocument);
       return res.status(409).json({
         success: false,
         message: 'Ya existe una persona registrada con este número de documento',
@@ -183,7 +187,8 @@ export const createPerson = async (req, res, next) => {
       },
     ]);
 
-    console.log('👤 Person created successfully, sending log...');
+    console.log('Persona creada exitosamente:', fname, lname);
+    console.log('Enviando log de creación...');
 
     // En el futuro, esto vendrá del middleware de autenticación: req.user.id
     // Por ahora, puede venir del body o usar 'system' como fallback
@@ -198,15 +203,26 @@ export const createPerson = async (req, res, next) => {
       email
     });
 
+    console.log('Log de creación enviado exitosamente');
     res.status(201).json({ success: true, data });
   } catch (error) {
+    console.error('Error creando persona:', error.message);
     next(error);
   }
 }; export const getPersons = async (req, res, next) => {
   try {
+    console.log('Consultando personas con filtros:', req.query);
     const data = await readRecords(TABLE, req.query);
+    console.log('Consulta exitosa, encontradas:', data.length, 'personas');
+
+    // Debug: Mostrar estructura de los primeros registros
+    if (data.length > 0) {
+      console.log('Estructura del primer registro:', JSON.stringify(data[0], null, 2));
+    }
+
     res.json({ success: true, data });
   } catch (error) {
+    console.error('Error consultando personas:', error.message);
     next(error);
   }
 };
@@ -215,6 +231,8 @@ export const updatePerson = async (req, res, next) => {
   try {
     const { id } = req.params; // Obtener ID de la URL
     const updates = req.body; // Los updates ahora vienen directamente en el body
+
+    console.log('Actualizando persona ID:', id, '- Campos:', Object.keys(updates));
 
     // Validar que solo se actualicen campos permitidos
     const allowedFields = ['tdocument', 'ndocument', 'fname', 'sname', 'lname', 'bday', 'gender', 'email', 'cel'];
@@ -230,6 +248,7 @@ export const updatePerson = async (req, res, next) => {
     if (Object.keys(filteredUpdates).length > 0) {
       const validationErrors = validatePersonData(filteredUpdates, true); // true = es actualización parcial
       if (validationErrors.length > 0) {
+        console.log('Errores de validación en actualización:', validationErrors);
         return res.status(400).json({
           success: false,
           message: 'Errores de validación en la actualización',
@@ -251,12 +270,15 @@ export const updatePerson = async (req, res, next) => {
     }
 
     const updated = await updateRecord(TABLE, '_id', id, filteredUpdates);
+    console.log('Persona actualizada exitosamente, ID:', id);
 
     const userId = req.body.user_id || req.user?.id || 'system';
     await logAction('UPDATE_PERSON', userId, { id, updates: filteredUpdates });
+    console.log('Log de actualización enviado');
 
     res.json({ success: true, updated });
   } catch (error) {
+    console.error('Error actualizando persona:', error.message);
     next(error);
   }
 }; export const deletePerson = async (req, res, next) => {
@@ -264,12 +286,17 @@ export const updatePerson = async (req, res, next) => {
     const { id } = req.params; // Obtener ID de la URL
     const userId = req.body?.user_id || req.user?.id || 'system';
 
+    console.log('Eliminando persona ID:', id);
+
     const deleted = await deleteRecord(TABLE, '_id', id);
+    console.log('Persona eliminada exitosamente');
 
     await logAction('DELETE_PERSON', userId, { id });
+    console.log('Log de eliminación enviado');
 
     res.json({ success: true, deleted });
   } catch (error) {
+    console.error('Error eliminando persona:', error.message);
     next(error);
   }
 };

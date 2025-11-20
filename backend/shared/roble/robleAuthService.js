@@ -17,13 +17,13 @@ export const robleLogin = async (email, password) => {
 
 export const robleSignup = async (email, password, name) => {
   const baseUrl = getBaseUrl();
-  console.log('🔍 Base URL for signup:', baseUrl);
-  console.log('🔍 Environment vars:', {
+  console.log('Base URL for signup:', baseUrl);
+  console.log('Environment vars:', {
     ROBLE_BASE_URL: process.env.ROBLE_BASE_URL,
     ROBLE_DB_NAME: process.env.ROBLE_DB_NAME
   });
 
-  const res = await axios.post(`${baseUrl}/signup`, { email, password, name });
+  const res = await axios.post(`${baseUrl}/signup-direct`, { email, password, name });
   return res.data;
 };
 
