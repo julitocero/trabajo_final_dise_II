@@ -6,7 +6,7 @@ const TABLE = 'persons';
 // Función de validación para actualización
 const validateUpdateData = (data) => {
     const errors = [];
-    const { tdocument, ndocument, fname, sname, lname, bday, gender, email, cel } = data;
+    const { tdocument, ndocument, fname, sname, lname, bday, gender, email, cel, img_Url } = data;
 
     // Validar tipo de documento (si se proporciona)
     if (tdocument && !['T.I', 'C.C'].includes(tdocument)) {
@@ -75,6 +75,13 @@ const validateUpdateData = (data) => {
         }
     }
 
+    // Validar imagen URL (si se proporciona)
+    if (img_Url) {
+        if (typeof img_Url !== 'string' || img_Url.trim().length === 0) {
+            errors.push('URL de imagen debe ser un texto válido');
+        }
+    }
+
     return errors;
 };
 
@@ -97,7 +104,7 @@ export const updatePerson = async (req, res, next) => {
         console.log('Intento de actualizar persona con ID:', id);
 
         // Filtrar solo los campos permitidos para actualización (excluir campos de control)
-        const allowedFields = ['tdocument', 'ndocument', 'fname', 'sname', 'lname', 'bday', 'gender', 'email', 'cel'];
+        const allowedFields = ['tdocument', 'ndocument', 'fname', 'sname', 'lname', 'bday', 'gender', 'email', 'cel', 'img_Url'];
         const updateData = {};
 
         allowedFields.forEach(field => {

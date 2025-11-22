@@ -203,7 +203,8 @@ Content-Type: application/json
   "bday": "1990-05-15",
   "gender": "Masculino",
   "email": "juan.perez@email.com",
-  "cel": "3001234567"
+  "cel": "3001234567",
+  "img_Url": "cualquier_texto_o_url"
 }
 ```
 
@@ -234,7 +235,8 @@ Content-Type: application/json
 
 {
   "email": "nuevo.email@email.com",
-  "cel": "3009876543"
+  "cel": "3009876543",
+  "img_Url": "https://example.com/profile/nueva-imagen.png"
 }
 ```
 
