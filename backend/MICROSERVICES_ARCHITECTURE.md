@@ -254,11 +254,20 @@ GET http://localhost:4003/api/logs?action=UPDATE_PERSON
 // Logs por usuario
 GET http://localhost:4003/api/logs?user=12
 
-// Logs por rango de fecha (si el campo existe)
-GET http://localhost:4003/api/logs?timesp=2025-11-22
+// Logs desde una fecha específica
+GET http://localhost:4003/api/logs?dateFrom=2024-12-12
 
-// Múltiples filtros combinados
-GET http://localhost:4003/api/logs?action=CREATE_PERSON&user=1
+// Logs hasta una fecha específica
+GET http://localhost:4003/api/logs?dateTo=2025-12-12
+
+// Logs en un rango de fechas específico
+GET http://localhost:4003/api/logs?dateFrom=2024-12-12&dateTo=2025-12-12
+
+// Filtros combinados: usuario + acción + rango de fechas
+GET http://localhost:4003/api/logs?user=12&action=CREATE_PERSON&dateFrom=2024-12-12&dateTo=2025-12-12
+
+// Solo logs de hoy
+GET http://localhost:4003/api/logs?dateFrom=2025-11-22&dateTo=2025-11-22
 ```
 
 ## Migración desde el Servicio Monolítico
