@@ -1,0 +1,87 @@
+/* Fondo completo */
+.login-container {
+  width: 100%;
+  height: 100vh;
+  background-color: #536C8D;     /* color azul/azulado */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-bubble {
+  position: fixed;
+  right: -40px;
+  top: -50px;
+  z-index: 0;
+}
+
+/* Tarjeta central */
+.login-box {
+  background-color: #FFFADF;
+  padding: 40px;
+  width: 370px;
+  border-radius: 16px;
+  text-align: center;
+  z-index: 10;
+}
+
+/* Título */
+.login-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* Subtítulo */
+.login-subtitle {
+  margin: 5px 0 20px 0;
+  color: #333;
+}
+
+/* Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-form label {
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Input */
+.login-input {
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #d4d4d4;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-input:focus {
+  border-color: #7fa6b8;
+  background-color: #ffffff;
+}
+
+/* Botón */
+.login-btn {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  background-color: #69a77c;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #5c926c;
+}

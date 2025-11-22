@@ -1,0 +1,23 @@
+.option-body{
+    width: 270px;
+    height: 250px;
+    background-color: var(--option-color);
+    color: var(--text-color);
+    font-size: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    
+}
+
+.option-body:hover{
+    background-color: var(--option-hover-color); 
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.option-body img{
+    margin-top: 50px;
+    filter: var(--icon-color)
+}

@@ -1,0 +1,149 @@
+.maind-body-add {
+  text-align: center;
+}
+
+/* Quitar flechas en Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Quitar flechas en Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.add-header {
+  background-color: #FFFFFF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.img-bubble {
+  position: fixed;
+  right: -40px;
+  top: -50px;
+  z-index: 0;
+  
+}
+
+.img-bubble:hover {
+  transform: scale(1.04);
+  transition: transform 0.7s ease;
+}
+
+.txt-home{
+  width: 30vw;
+  height: 10vh;
+  color: black;
+  font-size: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin-left: 260px;
+  padding-top: 30px;
+  text-align: start;
+}
+
+.div-logout{
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  position: fixed;
+  top: 0;
+  right: 0;
+  gap: 10px;
+  padding: 25px 20px 0px 0px;
+  font-size: 30px;
+}
+
+.img-logout{
+  width: 31px;
+  height: 31px;
+}
+
+.img-logout:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+  filter: brightness(1.5);
+}
+
+.div-body{
+  z-index: 2;
+  width: 80vw;
+  height: 70vh;
+  margin-left: 250px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: start;
+  gap: 20%;
+}
+
+.div-btn-submit{
+  width: 200px;
+  height: auto;
+}
+
+.div-btn-submit button{
+  background-color: #62A07B;
+  color: #FFFFFF;
+  border: 0 solid black;
+  width: 200px;
+  height: 60px;
+  border-radius: 16px;
+}
+
+.div-btn-submit  button:hover{
+  background-color: #7CC897;
+  transform: scale(1.1);
+  transition: transform 0.5s ease;
+}
+
+.div-consultallm{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20%;
+    width: 60%;
+    height: 100%;
+}
+
+.div-prompt{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 25%;
+}
+
+.div-prompt p{
+    color: black;
+    font-size: 20px;
+    width: 40vw;
+    text-align: center;
+}
+
+.div-prompt textarea{
+    background-color: #D9D9D9;
+    color: black;
+    text-align: start;
+    width: 100%;
+    height: 100%;
+}
+
+

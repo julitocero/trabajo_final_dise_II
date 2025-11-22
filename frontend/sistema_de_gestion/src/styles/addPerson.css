@@ -1,0 +1,361 @@
+.maind-body-add {
+  text-align: center;
+}
+
+/* Quitar flechas en Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Quitar flechas en Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.add-header {
+  background-color: #FFFFFF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.img-bubble {
+  position: fixed;
+  right: -40px;
+  top: -50px;
+  z-index: 0;
+  
+}
+
+.img-bubble:hover {
+  transform: scale(1.04);
+  transition: transform 0.7s ease;
+}
+
+.txt-home{
+  width: 30vw;
+  height: 10vh;
+  color: black;
+  font-size: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin-left: 260px;
+  padding-top: 30px;
+  text-align: start;
+}
+
+.div-logout{
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  position: fixed;
+  top: 0;
+  right: 0;
+  gap: 10px;
+  padding: 25px 20px 0px 0px;
+  font-size: 30px;
+}
+
+.img-logout{
+  width: 31px;
+  height: 31px;
+}
+
+.img-logout:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+  filter: brightness(1.5);
+}
+
+.div-body{
+  z-index: 2;
+  width: 80vw;
+  height: 70vh;
+  margin-left: 250px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: start;
+  gap: 20%;
+  color: black;
+}
+
+.div-btn-submit{
+  width: 200px;
+  height: auto;
+}
+
+.div-btn-submit button{
+  background-color: #62A07B;
+  color: #FFFFFF;
+  border: 0 solid black;
+  width: 200px;
+  height: 60px;
+  border-radius: 16px;
+}
+
+.div-btn-submit  button:hover{
+  background-color: #7CC897;
+  transform: scale(1.1);
+  transition: transform 0.5s ease;
+}
+
+.div-form-add{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 60%;
+    height: 100%;
+    
+}
+
+.div-form-photo{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    width: 100%;
+}
+
+.div-form-datos{
+    display: flex;
+    flex-direction: column;
+    color: black;
+    font-size: 30px;
+    width: 100%;
+}
+
+.div-form-datos p{
+    background-color: white;
+    width: auto;
+    height: auto;
+    font-size: 20px;
+    margin: 5px;
+}
+
+.div-form-datos input{
+    border-radius: 8px;
+    margin-bottom: 5px;
+    height: 30px;
+    width: 100%;
+    border: 0.5px solid black;
+    font-size: 16px;
+    padding-left: 8px;
+}
+
+.div-form-datos input:focus {
+  border-color: #536C8D;
+  outline: none;
+  border: 2px solid #536C8D;
+}
+
+
+
+.div-form-datos select{
+    border-radius: 8px;
+    margin-bottom: 5px;
+    height: 32px;
+    width: 100%;
+    border: 0.5px solid black;
+    appearance: none;        
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  font-size: 16px;
+  padding-left: 8px;
+}
+
+.div-form-datos select:focus {
+  border-color: #536C8D;
+  outline: none;
+  border: 2px solid #536C8D;
+}
+
+.div-form-add2{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+    
+}
+
+#fileInput {
+  display: none;
+}
+
+.photo-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-btn {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.upload-btn:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.icon-img {
+  width: 160px;
+  height: 160px;
+}
+
+.preview-img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%; 
+  border: 2px solid #000;
+}
+
+
+/*--------------------  MODIFY PERSON -------------------------*/                   /*--------------------  MODIFY PERSON -------------------------*/
+
+.txt-home2{
+  width: 30vw;
+  height: 20vh;
+  color: black;
+  font-size: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin-left: 260px;
+  padding-top: 30px;
+  text-align: start;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  z-index: 3;
+}
+
+.div-search{
+  display: flex;
+  flex-direction: row;
+  width: 600px;
+  height: auto;
+}
+
+.div-form-datos-search{
+    display: flex;
+    flex-direction: column;
+    color: black;
+    font-size: 30px;
+    width: 100%;
+}
+
+.div-form-datos-search input{
+    border-radius: 8px;
+    margin-bottom: 5px;
+    height: 30px;
+    width: auto;
+    border: 0.5px solid black;
+    font-size: 16px;
+    padding-left: 8px;
+}
+
+.div-form-datos-search input:focus {
+  border-color: #536C8D;
+  outline: none;
+  border: 2px solid #536C8D;
+}
+
+.div-form-datos-search p{
+    background-color: white;
+    width: auto;
+    height: auto;
+    font-size: 20px;
+    margin: 5px;
+}
+
+.div-btn-submit2{
+  width: auto;
+  height: auto;
+  padding-left: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.div-btn-submit2 button{
+  background-color: #4F8B89;
+  color: #FFFFFF;
+  border: 0 solid black;
+  width: 200px;
+  height: 50%;
+  border-radius: 16px;
+}
+
+.div-btn-submit2 button:hover{
+  background-color: #66A6A4;
+  transform: scale(1.1);
+  transition: transform 0.5s ease;
+}
+
+/*--------------------  DELETE PERSON -------------------------*/                   /*--------------------  DELETE PERSON -------------------------*/  
+
+.div-btn-delete{
+  width: 200px;
+  height: auto;
+}
+
+.div-btn-delete button{
+  background-color: #FC9D9A;
+  color: #FFFFFF;
+  border: 0 solid black;
+  width: 200px;
+  height: 60px;
+  border-radius: 16px;
+}
+
+.div-btn-delete  button:hover{
+  background-color: #FC9D9A;
+  transform: scale(1.1);
+  transition: transform 0.5s ease;
+  filter: brightness(1.1);
+}
+
+/*--------------------  CONSULTA LOG -------------------------*/                   /*--------------------  CONSULTA LOG -------------------------*/  
+
+
+.div-search-log{
+  display: flex;
+  flex-direction: row;
+  width: 70vw;
+  height: auto;
+  gap: 3%;
+}
+
+.div-form-datos-search select{
+    border-radius: 8px;
+    margin-bottom: 5px;
+    height: 32px;
+    width: 100%;
+    border: 0.5px solid black;
+    appearance: none;        
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  font-size: 16px;
+  padding-left: 8px;
+}
+
+.div-form-datos-search select:focus {
+  border-color: #536C8D;
+  outline: none;
+  border: 2px solid #536C8D;
+}

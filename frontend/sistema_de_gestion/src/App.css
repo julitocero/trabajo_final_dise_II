@@ -1,0 +1,101 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #FFFFFF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.img-bubble {
+  position: fixed;
+  right: -40px;
+  top: -50px;
+  z-index: 0;
+}
+
+.img-bubble:hover {
+  transform: scale(1.04);
+  transition: transform 0.7s ease;
+}
+
+.txt-home{
+  width: 30vw;
+  height: 10vh;
+  color: black;
+  font-size: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin-left: 260px;
+  padding-top: 30px;
+  text-align: start;
+}
+
+.div-logout{
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  position: fixed;
+  top: 0;
+  right: 0;
+  gap: 10px;
+  padding: 25px 20px 0px 0px;
+  font-size: 30px;
+}
+
+.img-logout{
+  width: 31px;
+  height: 31px;
+}
+
+.img-logout:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+  filter: brightness(1.5);
+}
+
+.div-option{
+  z-index: 2;
+  width: 50vw;
+  height: 60vh;
+  margin-left: 250px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2%;
+  padding: 10px 40px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
