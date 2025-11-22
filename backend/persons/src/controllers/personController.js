@@ -157,7 +157,7 @@ export const createPerson = async (req, res, next) => {
       console.log('Errores de validación:', validationErrors);
       return res.status(400).json({
         success: false,
-        message: 'Errores de validación',
+        message: 'Errores de validación en los datos proporcionados',
         errors: validationErrors
       });
     }
