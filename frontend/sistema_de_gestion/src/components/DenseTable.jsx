@@ -1,49 +1,71 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+export default function TableDynamic({ data = [] }) {
+  if (!Array.isArray(data) || data.length === 0) {
+    return <p>No hay datos para mostrar</p>;
+  }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+  // Normalizar: si viene "details" en string, convertirlo a JSON objeto
+  const normalizedData = data.map((item) => {
+    const newItem = { ...item };
 
-export default function DenseTable() {
+    if (typeof newItem.details === "string") {
+      try {
+        newItem.details = JSON.parse(newItem.details);
+      } catch (e) {
+        // si no parsea, dejarlo como está
+      }
+    }
+
+    return newItem;
+  });
+
+  // Encabezados: incluir claves normales + expandir las de details
+  const baseHeaders = Object.keys(normalizedData[0]).filter(
+    (key) => key !== "details"
+  );
+
+  const detailHeaders = normalizedData[0].details
+    ? Object.keys(normalizedData[0].details)
+    : [];
+
+  const headers = [...baseHeaders, ...detailHeaders];
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+      <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            {headers.map((header) => (
+              <TableCell key={header} style={{ fontWeight: "bold" }}>
+                {header.toUpperCase()}
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
+
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+          {normalizedData.map((row, idx) => (
+            <TableRow key={idx}>
+              {/* columnas normales */}
+              {baseHeaders.map((header) => (
+                <TableCell key={header}>
+                  {row[header]}
+                </TableCell>
+              ))}
+
+              {/* columnas del JSON interno "details" */}
+              {detailHeaders.map((detailKey) => (
+                <TableCell key={detailKey}>
+                  {row.details?.[detailKey] ?? ""}
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>
@@ -51,3 +73,4 @@ export default function DenseTable() {
     </TableContainer>
   );
 }
+

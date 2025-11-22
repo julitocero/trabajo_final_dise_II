@@ -1,16 +1,11 @@
 import '../styles/ConsultaLLM.css';
 import Sidebar from '../components/Sidebar';
 import bubble from '../media/bubble.svg'
-import Option from "../components/Option"
-import addPersonIcon from '../media/add_person.svg'
-import deletePersonIcon from '../media/delete_person.svg'
-import modifyIcon from '../media/modify.svg'
-import queryIcon from '../media/query.svg'
-import keyboardIcon from '../media/keyboard.svg'
-import logIcon from '../media/log.svg'
 import logoutIcon from '../media/logout.svg'
 import photoIcon from '../media/photo.svg'
+import { useAuth } from "../AuthContext";
 function Add() {
+  const { user } = useAuth();
   return (
     <div className="main-body-add">
       <header className="add-header">
@@ -18,7 +13,7 @@ function Add() {
         <img className='img-bubble' src={bubble} alt="jeje" />
         <div className='txt-home'>Consulta de Datos - Lenguaje Natural</div>
         <div className='div-logout'> 
-          <div className='txt-name'>Adalberto</div>
+          <div className='txt-name'>{user.name}</div>
           <img className='img-logout' src={logoutIcon}></img>
         </div>
         <div className='div-body'>

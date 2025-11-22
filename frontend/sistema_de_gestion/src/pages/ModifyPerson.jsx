@@ -1,19 +1,16 @@
 import '../styles/addPerson.css';
 import Sidebar from '../components/Sidebar';
 import bubble from '../media/bubble.svg'
-import Option from "../components/Option"
-import addPersonIcon from '../media/add_person.svg'
-import deletePersonIcon from '../media/delete_person.svg'
-import modifyIcon from '../media/modify.svg'
-import queryIcon from '../media/query.svg'
-import keyboardIcon from '../media/keyboard.svg'
-import logIcon from '../media/log.svg'
 import logoutIcon from '../media/logout.svg'
 import photoIcon from '../media/photo.svg'
 import { useState } from 'react';
+import { useAuth } from "../AuthContext";
 
 
 function ModifyPerson() {
+const { user } = useAuth();
+console.log("userid:", user)
+const [userID, setUserID] = useState("")
 const [ndocumentSearch, setNdocumentSearch] = useState("");
 const [tdocument, setTdocument] = useState("");
 const [ndocument, setNdocument] = useState("");
@@ -24,8 +21,45 @@ const [bday, setBday] = useState("");
 const [gender, setGender] = useState("");
 const [email, setEmail] = useState("");
 const [cel, setCel] = useState("");
+const [dataPerson, setDataPerson] =  useState([]);
+const [data, setData] =  useState([]);
+const [idPerson, setIdPerson] = useState("")
 
-const updateUser = async (id) => {
+
+const getPerson = async (document) => {
+  try {
+    const response = await fetch(`http://localhost:4002/api/persons?ndocument=${document}`);
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Error:", data);
+      alert("Error actualizando usuario");
+      return;
+    }
+    console.log("Datos obtenidos:", data);
+    const person = data.data[0]
+    setDataPerson(data.data[0])
+    console.log("data:", dataPerson)
+    setFname(person.fname ?? "")
+    setTdocument(person.tdocument ?? "")
+    setNdocument(person.ndocument ?? "")
+    setSname(person.sname ?? "")
+    setLname(person.lname ?? "")
+    setBday(person.bday ?? "")
+    setLname(person.lname ?? "")
+    setGender(person.gender ?? "")
+    setEmail(person.email ?? "")
+    setCel(person.cel ?? "")
+    setIdPerson(person._id)
+  } catch (err) {
+    console.error("Request error:", err);
+    alert("No se pudo conectar con el servidor");
+  }
+}
+const updateUser = async (idPerson) => {
+  setUserID(user.id)
+  console.log("userid:", userID)
   const body = {
     tdocument,
     ndocument,
@@ -35,11 +69,11 @@ const updateUser = async (id) => {
     bday,
     gender,
     email,
-    cel
+    userID
   };
   try {
-    const response = await fetch(`http://localhost:4002/api/persons/${id}`, {
-      method: "PATCH",
+    const response = await fetch(`http://localhost:4002/api/persons/:${idPerson}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
@@ -78,10 +112,10 @@ const updateUser = async (id) => {
         <img className='img-bubble' src={bubble} alt="jeje" />
         <div className='txt-home2'>
             <p>Modificar Persona</p>
-            <div className='div-search'><div className='div-form-datos-search'><p>Ingrese el nro. de documento</p> <input type="number" placeholder='1234567890' value={ndocumentSearch} onChange={setNdocumentSearch}/></div><div className='div-btn-submit2'><button>Buscar</button></div></div>
+            <div className='div-search'><div className='div-form-datos-search'><p>Ingrese el nro. de documento</p> <input type="number" placeholder='1234567890' onChange={(e) => setNdocumentSearch(e.target.value)}/></div><div className='div-btn-submit2'><button onClick={() => getPerson(ndocumentSearch)}>Buscar</button></div></div>
             </div>
         <div className='div-logout'> 
-          <div className='txt-name'>Adalbert</div>
+          <div className='txt-name'>name</div>
           <img className='img-logout' src={logoutIcon}></img>
         </div>
 
@@ -106,18 +140,18 @@ const updateUser = async (id) => {
 
                     <div className='div-form-datos'>
                         <p>Primer Nombre</p>
-                        <input type="text" placeholder='Jhon ' value={fname} onChange={setFname}/>
+                        <input type="text" value={fname} onChange={(e) => setFname(e.target.value)}/>
                         <p>Segundo Nombre</p>
-                        <input type="text" placeholder='Mario' value={sname} onChange={setSname}/>
+                        <input type="text" value={sname}  onChange={(e) => setSname(e.target.value)}/>
                         <p>Apellidos</p>
-                        <input type="text" placeholder='Dalton Doe' value={lname} onChange={setLname}/>
+                        <input type="text" value={lname}  onChange={(e) => setLname(e.target.value)}/>
                     </div>
                 </div>
                 <div className='div-form-add2'>
-                    <div className='div-form-datos' >
+                    <div className='div-form-datos'>
                       <p>Tipo Documento</p> 
-                      <select value={tdocument} onChange={setTdocument}>
-                        <option disabled>Seleccione...</option>
+                      <select onChange={(e) => setTdocument(e.target.value)} value={tdocument}>
+                        <option value='' disabled selected>Seleccione...</option>
                         <option value="C.C">CC</option>
                         <option value="T.I">TI</option>
                         
@@ -125,23 +159,23 @@ const updateUser = async (id) => {
                       </div>
                     <div className='div-form-datos' >
                       <p>Nro. Documento</p> 
-                      <input type="number" placeholder='1234567890' value={ndocument} onChange={setNdocument}/>
+                      <input type="number" value={ndocument} onChange={(e) => setNdocument(e.target.value)}/>
                       </div>
                     <div className='div-form-datos' >
                       <p>Género</p> 
-                      <select value={gender} onChange={setGender}>
-                        <option disabled>Seleccione...</option>
+                      <select onChange={(e) => setGender(e.target.value)} value={gender}>
+                        <option value=''disabled selected>Seleccione...</option>
                         <option value="Masculino">Masculino</option>
                         <option value="Femenino">Femenino</option>
-                        <option value="O">Otro</option>
+                        <option value="No binario o Prefiero no responder">Otro</option>
                       </select>
                     </div>
-                    <div className='div-form-datos' ><p>Fecha Nacimiento</p> <input type="date" value={bday} onChange={setBday}/></div>
-                    <div className='div-form-datos' ><p>Correo</p> <input type="text" placeholder='jhondalton@ejemplo.com' value={email} onChange={setEmail}/></div>
-                    <div className='div-form-datos' ><p>Celular</p> <input type="number" placeholder='1234567890' value={cel} onChange={setCel}/></div>
+                    <div className='div-form-datos' ><p>Fecha Nacimiento</p> <input type="date" value={bday} onChange={(e) => setBday(e.target.value)}/></div>
+                    <div className='div-form-datos' ><p>Correo</p> <input type="text" value={email} onChange={(e) => setEmail(e.target.value)}/></div>
+                    <div className='div-form-datos' ><p>Celular</p> <input type="number"value={cel} onChange={(e) => setCel(e.target.value)}/></div>
                 </div>
             </div >
-            <div className='div-btn-submit'><button onClick={() => updateUser(ndocument)}>SUBMIT</button></div>
+            <div className='div-btn-submit'><button onClick={() => updateUser(idPerson)}>SUBMIT</button></div>
         </div>
       </header>
     </div>

@@ -17,7 +17,7 @@ const Sidebar = () => {
       <div className="sidebar-header">Mi App</div>
       <div className='sidebar-title'>Menú Principal</div>
       <nav className="sidebar-nav">
-        <a onClick={() => navigate("/")}><img className='img' src={homeIcon} alt='Icono de home'/> Home</a>
+        <a onClick={() => navigate("/home")}><img className='img' src={homeIcon} alt='Icono de home'/> Home</a>
         <a onClick={() => navigate("/add")}><img className='img' src={addPersonIcon} alt='Icono de add'/> Crear Persona</a>
         <a onClick={() => navigate("/modify")}><img className='img' src={modifyIcon} alt='Icono de modificar'/> Modificar Datos</a>
         <a onClick={() => navigate("/delete")}><img className='img' src={deletePersonIcon} alt='Icono de delete'/> Borrar Persona</a>

@@ -1,17 +1,12 @@
 import '../styles/addPerson.css';
 import Sidebar from '../components/Sidebar';
 import bubble from '../media/bubble.svg'
-import Option from "../components/Option"
-import addPersonIcon from '../media/add_person.svg'
-import deletePersonIcon from '../media/delete_person.svg'
-import modifyIcon from '../media/modify.svg'
-import queryIcon from '../media/query.svg'
-import keyboardIcon from '../media/keyboard.svg'
-import logIcon from '../media/log.svg'
 import logoutIcon from '../media/logout.svg'
 import photoIcon from '../media/photo.svg'
 import { useState } from 'react';
+import { useAuth } from "../AuthContext";
 function DeletePerson() {
+  const { user } = useAuth();
   const [ndocumentSearch, setNdocumentSearch] = useState("");
   const [tdocument, setTdocument] = useState("");
   const [ndocument, setNdocument] = useState("");
@@ -66,7 +61,7 @@ function DeletePerson() {
             <div className='div-search'><div className='div-form-datos-search'><p>Ingrese el nro. de documento</p> <input type="number" placeholder='1234567890' value={ndocumentSearch} onChange={setNdocumentSearch}/></div><div className='div-btn-submit2'><button>Buscar</button></div></div>
             </div>
         <div className='div-logout'> 
-          <div className='txt-name'>Adalberto</div>
+          <div className='txt-name'>{user.name}</div>
           <img className='img-logout' src={logoutIcon}></img>
         </div>
 

@@ -1,22 +1,14 @@
 import '../styles/addPerson.css';
 import Sidebar from '../components/Sidebar';
 import bubble from '../media/bubble.svg'
-import Option from "../components/Option"
-import addPersonIcon from '../media/add_person.svg'
-import deletePersonIcon from '../media/delete_person.svg'
-import modifyIcon from '../media/modify.svg'
-import queryIcon from '../media/query.svg'
-import keyboardIcon from '../media/keyboard.svg'
-import logIcon from '../media/log.svg'
 import logoutIcon from '../media/logout.svg'
 import photoIcon from '../media/photo.svg'
 import { useState } from 'react';
-
-
-
+import { useAuth } from "../AuthContext";
 
 function Add() {
-
+const { user } = useAuth();
+const [userID, setUserID] = useState("");
 const [tdocument, setTdocument] = useState("");
 const [ndocument, setNdocument] = useState("");
 const [fname, setFname] = useState("");
@@ -28,6 +20,10 @@ const [email, setEmail] = useState("");
 const [cel, setCel] = useState("");
 
 const handleCreateUser = async () => {
+  
+  const user_id = user.id
+  console.log(user_id)
+  console.log("gendero",gender)
   const body = {
     tdocument,
     ndocument,
@@ -37,9 +33,10 @@ const handleCreateUser = async () => {
     bday,
     gender,
     email,
-    cel
+    cel,
+    user_id
   };
-
+  console.log("gendero",gender)
   try {
     const response = await fetch("http://localhost:4002/api/persons", {
       method: "POST",
@@ -73,6 +70,7 @@ const handleCreateUser = async () => {
     if (foto) {
       const imageURL = URL.createObjectURL(foto)
       setPreview(imageURL)
+      console.log("url:",imageURL)
     }
   };
   return (
@@ -82,7 +80,7 @@ const handleCreateUser = async () => {
         <img className='img-bubble' src={bubble} alt="jeje" />
         <div className='txt-home'>Crear Persona</div>
         <div className='div-logout'> 
-          <div className='txt-name'>Adalberto</div>
+          <div className='txt-name'>julio</div>
           <img className='img-logout' src={logoutIcon}></img>
         </div>
         <div className='div-body'>
@@ -105,17 +103,17 @@ const handleCreateUser = async () => {
 
                     <div className='div-form-datos'>
                         <p>Primer Nombre</p>
-                        <input type="text" placeholder='Jhon' value={fname} onChange={setFname}/>
+                        <input type="text" placeholder='Jhon'  onChange={(e) => setFname(e.target.value)}/>
                         <p>Segundo Nombre</p>
-                        <input type="text" placeholder='Mario' value={sname} onChange={setSname}/>
+                        <input type="text" placeholder='Mario' onChange={(e) => setSname(e.target.value)}/>
                         <p>Apellidos</p>
-                        <input type="text" placeholder='Dalton Doe' value={lname} onChange={setFname}/>
+                        <input type="text" placeholder='Dalton Doe' onChange={(e) => setLname(e.target.value)}/>
                     </div>
                 </div>
                 <div className='div-form-add2'>
                     <div className='div-form-datos' >
                       <p>Tipo Documento</p> 
-                      <select value={tdocument} onChange={setTdocument}>
+                      <select onChange={(e) => setTdocument(e.target.value)}>
                         <option disabled>Seleccione...</option>
                         <option value="T.I">TI</option>
                         <option value="C.C">CC</option>
@@ -124,23 +122,23 @@ const handleCreateUser = async () => {
                     </div>
                     <div className='div-form-datos' >
                       <p>Nro. Documento</p> 
-                      <input type="number" placeholder='1234567890' value={ndocument} onChange={setNdocument}/>
+                      <input type="number" placeholder='1234567890' onChange={(e) => setNdocument(e.target.value)}/>
                       </div>
                     <div className='div-form-datos' >
                       <p>Género</p> 
-                      <select value={gender} onChange={setGender}>
+                      <select onChange={(e) => setGender(e.target.value)}>
                         <option disabled>Seleccione...</option>
                         <option value="Masculino">Masculino</option>
                         <option value="Femenino">Femenino</option>
-                        <option value="Otro">Otro</option>
+                        <option value="No binario o Prefiero no responder">Otro</option>
                       </select>
                     </div>
-                    <div className='div-form-datos' ><p>Fecha Nacimiento</p> <input type="date" value={bday} onChange={setBday}/></div>
-                    <div className='div-form-datos' ><p>Correo</p> <input type="text" placeholder='jhondalton@ejemplo.com' value={email} onChange={setEmail}/></div>
-                    <div className='div-form-datos' ><p>Celular</p> <input type="number" placeholder='1234567890' value={cel} onChange={setCel}/></div>
+                    <div className='div-form-datos' ><p>Fecha Nacimiento</p> <input type="date" onChange={(e) => setBday(e.target.value)}/></div>
+                    <div className='div-form-datos' ><p>Correo</p> <input type="text" placeholder='jhondalton@ejemplo.com' onChange={(e) => setEmail(e.target.value)}/></div>
+                    <div className='div-form-datos' ><p>Celular</p> <input type="number" placeholder='1234567890' onChange={(e) => setCel(e.target.value)}/></div>
                 </div>
             </div >
-            <div className='div-btn-submit'><button onClick={handleCreateUser}>SUBMIT</button></div>
+            <div className='div-btn-submit'><button type='button' onClick={handleCreateUser}>SUBMIT</button></div>
         </div>
       </header>
     </div>
