@@ -1,0 +1,28 @@
+{
+    "name": "persons-update",
+    "version": "1.0.0",
+    "description": "Microservicio de actualización de personas - CRUD distribuido",
+    "main": "src/index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node src/index.js",
+        "dev": "nodemon src/index.js"
+    },
+    "dependencies": {
+        "express": "^4.18.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "axios": "^1.5.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    },
+    "keywords": [
+        "microservice",
+        "persons",
+        "update",
+        "api"
+    ],
+    "author": "",
+    "license": "MIT"
+}
