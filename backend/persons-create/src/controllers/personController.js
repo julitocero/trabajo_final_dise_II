@@ -6,7 +6,7 @@ const TABLE = 'persons';
 // Función de validación para creación
 const validatePersonData = (data) => {
     const errors = [];
-    const { tdocument, ndocument, fname, sname, lname, bday, gender, email, cel } = data;
+    const { tdocument, ndocument, fname, sname, lname, bday, gender, email, cel, img_Url } = data;
 
     // Validar tipo de documento
     if (!tdocument || !['T.I', 'C.C'].includes(tdocument)) {
@@ -79,10 +79,15 @@ const validatePersonData = (data) => {
         errors.push('Número de celular debe tener exactamente 10 caracteres');
     }
 
-    return errors;
-};
+    // Validar imagen URL
+    if (!img_Url) {
+        errors.push('URL de imagen es requerida');
+    } else if (typeof img_Url !== 'string' || img_Url.trim().length === 0) {
+        errors.push('URL de imagen debe ser un texto válido');
+    }
 
-// Función para verificar duplicados
+    return errors;
+};// Función para verificar duplicados
 const checkDocumentExists = async (ndocument) => {
     try {
         const existingPersons = await readRecords(TABLE, { ndocument });
@@ -104,7 +109,8 @@ export const createPerson = async (req, res, next) => {
             bday,
             gender,
             email,
-            cel
+            cel,
+            img_Url
         } = req.body;
 
         console.log('Intento de crear persona:', fname, lname, '- Documento:', tdocument, ndocument);
@@ -142,7 +148,8 @@ export const createPerson = async (req, res, next) => {
                 bday,
                 gender,
                 email,
-                cel
+                cel,
+                img_Url
             },
         ]);
 
@@ -157,7 +164,8 @@ export const createPerson = async (req, res, next) => {
             fname,
             sname,
             lname,
-            email
+            email,
+            img_Url
         });
 
         console.log('Log de creación enviado exitosamente');
