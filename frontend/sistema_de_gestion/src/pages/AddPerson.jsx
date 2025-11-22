@@ -18,10 +18,11 @@ const [bday, setBday] = useState("");
 const [gender, setGender] = useState("");
 const [email, setEmail] = useState("");
 const [cel, setCel] = useState("");
+  const [preview, setPreview] = useState( null );
 
 const handleCreateUser = async () => {
-  
   const user_id = user.id
+  const img_Url =  preview
   console.log(user_id)
   console.log("gendero",gender)
   const body = {
@@ -34,11 +35,12 @@ const handleCreateUser = async () => {
     gender,
     email,
     cel,
+    img_Url,
     user_id
   };
   console.log("gendero",gender)
   try {
-    const response = await fetch("http://localhost:4002/api/persons", {
+    const response = await fetch("http://localhost:4010/persons", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -63,16 +65,18 @@ const handleCreateUser = async () => {
   }
 };
 
-  const [preview, setPreview] = useState( null );
 
-  const onChangeFile = (e) => {
-    const foto = e.target.files[0]
-    if (foto) {
-      const imageURL = URL.createObjectURL(foto)
-      setPreview(imageURL)
-      console.log("url:",imageURL)
-    }
-  };
+
+const onChangeFile = (e) => {
+  const foto = e.target.files[0];
+  if (foto) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreview(reader.result);  
+    };
+    reader.readAsDataURL(foto);
+  }
+};
   return (
     <div className="main-body-add">
       <header className="add-header">

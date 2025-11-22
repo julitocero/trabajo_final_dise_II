@@ -30,44 +30,6 @@ function ConsultaLog() {
 };
 
 
-  const testData = [
-  {
-    "_id": "POHFIvphP1Xp",
-    "action": "CREATE_PERSON",
-    "user": 1,
-    "details": "{\"tdocument\":\"C.C\",\"ndocument\":\"34534534\",\"fname\":\"dart\",\"sname\":\"tien\",\"lname\":\"sanz\",\"email\":\"asdad@gmail.com\"}",
-    "timesp": "2025-10-14T16:07"
-  },
-  {
-    "_id": "g3EjYhKwxBpm",
-    "action": "DELETE_PERSON",
-    "user": 1,
-    "details": "{\"id\":\"fwz5PLR6Gl0Y\"}",
-    "timesp": "2025-10-14T16:19"
-  },
-  {
-    "_id": "ltvn7qZF4ymG",
-    "action": "CREATE_PERSON",
-    "user": 42,
-    "details": "{\"tdocument\":\"C.C\",\"ndocument\":\"5134662890\",\"fname\":\"Juanita\",\"sname\":\"Carl\",\"lname\":\"Pérez García\",\"email\":\"juan.perez@example.com\"}",
-    "timesp": "2025-11-22T04:53"
-  },
-  {
-    "_id": "a1N9mAwruDcc",
-    "action": "CREATE_PERSON",
-    "user": 20,
-    "details": "{\"tdocument\":\"C.C\",\"ndocument\":\"5114662810\",\"fname\":\"Juanito\",\"sname\":\"Jr\",\"lname\":\"Pérez García\",\"email\":\"juan.perez@example.com\"}",
-    "timesp": "2025-11-22T12:09"
-  },
-  {
-    "_id": "Cufdsb_xb6cL",
-    "action": "CREATE_PERSON",
-    "user": 1,
-    "details": "{\"tdocument\":\"C.C\",\"ndocument\":\"1222222222\",\"fname\":\"Julio\",\"sname\":\"Test\",\"lname\":\"Uno\",\"email\":\"juliotest1@gmail.com\"}",
-    "timesp": "2025-11-22T14:28"
-  }
-];
-
   const { user } = useAuth();
   return (
     <div className="main-body-add">
@@ -81,9 +43,10 @@ function ConsultaLog() {
                 <p>Tipo Documento</p> 
                 <select >
                   <option disabled>Seleccione...</option>
-                  <option value="CC">CC</option>
-                  <option value="TI">TI</option>
-                  
+                  <option value="CREATE_PERSON">CREATE_PERSON</option>
+                  <option value="READ_PERSONS_FILTERED">READ_PERSONS_FILTERED</option>
+                  <option value="READ_PERSONS_FILTERED">UPDATE_PERSON</option>
+                  <option value="READ_PERSONS_FILTERED">DELETE_PERSON</option>
                 </select>
               </div>
               <div className='div-form-datos-search'>

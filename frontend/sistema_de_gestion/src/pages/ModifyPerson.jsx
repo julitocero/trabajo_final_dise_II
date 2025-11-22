@@ -24,11 +24,12 @@ const [cel, setCel] = useState("");
 const [dataPerson, setDataPerson] =  useState([]);
 const [data, setData] =  useState([]);
 const [idPerson, setIdPerson] = useState("")
+const [foto, setFoto] = useState("");
 
 
 const getPerson = async (document) => {
   try {
-    const response = await fetch(`http://localhost:4002/api/persons?ndocument=${document}`);
+    const response = await fetch(`http://localhost:4011/persons?ndocument=${document}`);
 
     const data = await response.json();
 
@@ -52,6 +53,8 @@ const getPerson = async (document) => {
     setEmail(person.email ?? "")
     setCel(person.cel ?? "")
     setIdPerson(person._id)
+    setFoto(person.img_Url)
+    console.log("Foto", foto.slice(4))
   } catch (err) {
     console.error("Request error:", err);
     alert("No se pudo conectar con el servidor");
@@ -60,6 +63,7 @@ const getPerson = async (document) => {
 const updateUser = async (idPerson) => {
   setUserID(user.id)
   console.log("userid:", userID)
+  const img_Url =  foto
   const body = {
     tdocument,
     ndocument,
@@ -69,10 +73,12 @@ const updateUser = async (idPerson) => {
     bday,
     gender,
     email,
+    cel,
+    img_Url,
     userID
   };
   try {
-    const response = await fetch(`http://localhost:4002/api/persons/:${idPerson}`, {
+    const response = await fetch(`http://localhost:4012/persons/${idPerson}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -96,15 +102,16 @@ const updateUser = async (idPerson) => {
   }
 };
 
-  const [preview, setPreview] = useState( null );
-  
-    const onChangeFile = (e) => {
-      const foto = e.target.files[0]
-      if (foto) {
-        const imageURL = URL.createObjectURL(foto)
-        setPreview(imageURL)
-      }
-    };
+  const onChangeFile = (e) => {
+    const foto = e.target.files[0];
+    if (foto) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFoto(reader.result);  
+      };
+      reader.readAsDataURL(foto);
+    }
+};
   return (
     <div className="main-body-add">
       <header className="add-header">
@@ -133,7 +140,7 @@ const updateUser = async (idPerson) => {
 
                       <label htmlFor="fileInput" className="upload-btn">
                         {
-                          preview ? (<img src={preview} alt="Foto seleccionada" className="preview-img" />) : (<img src={photoIcon} alt="icono Foto" className="icon-img"/>)
+                          foto ? (<img src={foto} alt="Foto seleccionada" className="preview-img" />) : (<img src={photoIcon} alt="icono Foto" className="icon-img"/>)
                         }
                       </label>
                     </div>
