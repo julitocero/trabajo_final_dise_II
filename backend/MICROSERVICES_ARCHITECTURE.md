@@ -243,6 +243,24 @@ Content-Type: application/json
 DELETE http://localhost:4013/persons/[ID]
 ```
 
+### Consultar Logs con Filtros
+```javascript
+// Todos los logs
+GET http://localhost:4003/api/logs
+
+// Logs por acción específica
+GET http://localhost:4003/api/logs?action=UPDATE_PERSON
+
+// Logs por usuario
+GET http://localhost:4003/api/logs?user=12
+
+// Logs por rango de fecha (si el campo existe)
+GET http://localhost:4003/api/logs?timesp=2025-11-22
+
+// Múltiples filtros combinados
+GET http://localhost:4003/api/logs?action=CREATE_PERSON&user=1
+```
+
 ## Migración desde el Servicio Monolítico
 
 ### Opción 1: Gateway/Load Balancer

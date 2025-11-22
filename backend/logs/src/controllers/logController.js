@@ -20,9 +20,9 @@ export const createLog = async (req, res, next) => {
     // Preparar datos para insertar
     const logRecord = {
       action: String(action),
-      user: Number(user), 
-      details: JSON.stringify(details || {}), 
-      timesp: timestamp || new Date().toISOString() 
+      user: Number(user),
+      details: JSON.stringify(details || {}),
+      timesp: timestamp || new Date().toISOString()
     };
 
     console.log(' Inserting log record:', logRecord);
@@ -41,13 +41,21 @@ export const createLog = async (req, res, next) => {
 export const getLogs = async (req, res, next) => {
   try {
     console.log(' Getting logs with filters:', req.query);
+
+    // Usar req.query directamente como filtros
     const logs = await readRecords(LOG_TABLE, req.query);
     console.log(' Found logs:', logs?.length || 0);
+
+    // Log de la consulta para auditoría
+    if (Object.keys(req.query).length > 0) {
+      console.log(' Applied filters:', JSON.stringify(req.query));
+    }
 
     res.json({
       success: true,
       data: logs || [],
-      count: logs?.length || 0
+      count: logs?.length || 0,
+      filters: req.query
     });
   } catch (error) {
     console.error(' Error getting logs:', error);
