@@ -11,7 +11,60 @@ import logIcon from '../media/log.svg'
 import logoutIcon from '../media/logout.svg'
 import photoIcon from '../media/photo.svg'
 import { useState } from 'react';
+
+
+
+
 function Add() {
+
+const [tdocument, setTdocument] = useState("");
+const [ndocument, setNdocument] = useState("");
+const [fname, setFname] = useState("");
+const [sname, setSname] = useState("");
+const [lname, setLname] = useState("");
+const [bday, setBday] = useState("");
+const [gender, setGender] = useState("");
+const [email, setEmail] = useState("");
+const [cel, setCel] = useState("");
+
+const handleCreateUser = async () => {
+  const body = {
+    tdocument,
+    ndocument,
+    fname,
+    sname,
+    lname,
+    bday,
+    gender,
+    email,
+    cel
+  };
+
+  try {
+    const response = await fetch("http://localhost:4002/api/persons", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Error:", data);
+      alert("Error creando usuario");
+      return;
+    }
+
+    console.log("Usuario creado:", data);
+    alert("Usuario creado exitosamente");
+
+  } catch (error) {
+    console.error("Request error:", error);
+    alert("No se pudo conectar con el servidor");
+  }
+};
 
   const [preview, setPreview] = useState( null );
 
@@ -52,42 +105,42 @@ function Add() {
 
                     <div className='div-form-datos'>
                         <p>Primer Nombre</p>
-                        <input type="text" placeholder='Jhon '/>
+                        <input type="text" placeholder='Jhon' value={fname} onChange={setFname}/>
                         <p>Segundo Nombre</p>
-                        <input type="text" placeholder='Mario'/>
+                        <input type="text" placeholder='Mario' value={sname} onChange={setSname}/>
                         <p>Apellidos</p>
-                        <input type="text" placeholder='Dalton Doe'/>
+                        <input type="text" placeholder='Dalton Doe' value={lname} onChange={setFname}/>
                     </div>
                 </div>
                 <div className='div-form-add2'>
                     <div className='div-form-datos' >
                       <p>Tipo Documento</p> 
-                      <select>
+                      <select value={tdocument} onChange={setTdocument}>
                         <option disabled>Seleccione...</option>
-                        <option value="TI">TI</option>
-                        <option value="CC">CC</option>
+                        <option value="T.I">TI</option>
+                        <option value="C.C">CC</option>
                         
                       </select>
                     </div>
                     <div className='div-form-datos' >
                       <p>Nro. Documento</p> 
-                      <input type="number" placeholder='1234567890'/>
+                      <input type="number" placeholder='1234567890' value={ndocument} onChange={setNdocument}/>
                       </div>
                     <div className='div-form-datos' >
                       <p>Género</p> 
-                      <select>
+                      <select value={gender} onChange={setGender}>
                         <option disabled>Seleccione...</option>
-                        <option value="M">Masculino</option>
-                        <option value="F">Femenino</option>
-                        <option value="O">Otro</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Otro">Otro</option>
                       </select>
                     </div>
-                    <div className='div-form-datos' ><p>Fecha Nacimiento</p> <input type="date" /></div>
-                    <div className='div-form-datos' ><p>Correo</p> <input type="text" placeholder='jhondalton@ejemplo.com'/></div>
-                    <div className='div-form-datos' ><p>Celular</p> <input type="number" placeholder='1234567890'/></div>
+                    <div className='div-form-datos' ><p>Fecha Nacimiento</p> <input type="date" value={bday} onChange={setBday}/></div>
+                    <div className='div-form-datos' ><p>Correo</p> <input type="text" placeholder='jhondalton@ejemplo.com' value={email} onChange={setEmail}/></div>
+                    <div className='div-form-datos' ><p>Celular</p> <input type="number" placeholder='1234567890' value={cel} onChange={setCel}/></div>
                 </div>
             </div >
-            <div className='div-btn-submit'><button>SUBMIT</button></div>
+            <div className='div-btn-submit'><button onClick={handleCreateUser}>SUBMIT</button></div>
         </div>
       </header>
     </div>
