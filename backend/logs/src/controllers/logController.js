@@ -6,7 +6,7 @@ const LOG_TABLE = 'logs';
 export const createLog = async (req, res, next) => {
   try {
     console.log(' Received log request:', req.body);
-    const { action, user, details, timestamp } = req.body;
+    const { action, user, details, timestamp, ndocument } = req.body;
 
     // Validar campos requeridos
     if (!action || !user) {
@@ -22,7 +22,8 @@ export const createLog = async (req, res, next) => {
       action: String(action),
       user: Number(user),
       details: JSON.stringify(details || {}),
-      timesp: timestamp || new Date().toISOString()
+      timesp: timestamp || new Date().toISOString(),
+      ndocument: ndocument || null
     };
 
     console.log(' Inserting log record:', logRecord);

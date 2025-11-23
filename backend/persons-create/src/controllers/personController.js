@@ -166,7 +166,7 @@ export const createPerson = async (req, res, next) => {
             lname,
             email,
             img_Url
-        });
+        }, ndocument);
 
         console.log('Log de creación enviado exitosamente');
         res.status(201).json({ success: true, data });
