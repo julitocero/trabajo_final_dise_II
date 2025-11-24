@@ -44,17 +44,17 @@ const getPerson = async (document) => {
     console.log("data:", dataPerson)
     setFname(person.fname ?? "")
     setTdocument(person.tdocument ?? "")
-    setNdocument(person.ndocument ?? "")
+    setNdocument(String(person.ndocument) ?? "")
     setSname(person.sname ?? "")
     setLname(person.lname ?? "")
     setBday(person.bday ?? "")
     setLname(person.lname ?? "")
     setGender(person.gender ?? "")
     setEmail(person.email ?? "")
-    setCel(person.cel ?? "")
+    setCel(String(person.cel) ?? "")
+    console.log("cel:",person.cel)
     setIdPerson(person._id)
     setFoto(person.img_Url)
-    console.log("Foto", foto.slice(4))
   } catch (err) {
     console.error("Request error:", err);
     alert("No se pudo conectar con el servidor");
@@ -112,6 +112,7 @@ const updateUser = async (idPerson) => {
       reader.readAsDataURL(foto);
     }
 };
+console.log("cel:",cel)
   return (
     <div className="main-body-add">
       <header className="add-header">
@@ -179,7 +180,7 @@ const updateUser = async (idPerson) => {
                     </div>
                     <div className='div-form-datos' ><p>Fecha Nacimiento</p> <input type="date" value={bday} onChange={(e) => setBday(e.target.value)}/></div>
                     <div className='div-form-datos' ><p>Correo</p> <input type="text" value={email} onChange={(e) => setEmail(e.target.value)}/></div>
-                    <div className='div-form-datos' ><p>Celular</p> <input type="number"value={cel} onChange={(e) => setCel(e.target.value)}/></div>
+                    <div className='div-form-datos' ><p>Celular</p> <input type="number" value={cel} onChange={(e) => setCel(e.target.value)}/></div>
                 </div>
             </div >
             <div className='div-btn-submit'><button onClick={() => updateUser(idPerson)}>SUBMIT</button></div>

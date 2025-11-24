@@ -118,7 +118,7 @@ const onChangeFile = (e) => {
                     <div className='div-form-datos' >
                       <p>Tipo Documento</p> 
                       <select onChange={(e) => setTdocument(e.target.value)}>
-                        <option disabled>Seleccione...</option>
+                        <option disabled selected>Seleccione...</option>
                         <option value="T.I">TI</option>
                         <option value="C.C">CC</option>
                         
@@ -131,7 +131,7 @@ const onChangeFile = (e) => {
                     <div className='div-form-datos' >
                       <p>Género</p> 
                       <select onChange={(e) => setGender(e.target.value)}>
-                        <option disabled>Seleccione...</option>
+                        <option disabled selected>Seleccione...</option>
                         <option value="Masculino">Masculino</option>
                         <option value="Femenino">Femenino</option>
                         <option value="No binario o Prefiero no responder">Otro</option>

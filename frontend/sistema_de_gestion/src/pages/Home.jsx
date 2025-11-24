@@ -20,10 +20,10 @@ function Home() {
       <header className="App-header">
         <Sidebar />
         <img className='img-bubble' src={bubble} alt="jeje" />
-        <div className='txt-home'>¿Qué quieres hacer hoy, {user.name}?</div>
+        <div className='txt-home'>¿Qué quieres hacer hoy, ?</div>
 
         <div className='div-logout'>
-          <div className='txt-name'>{user.name}</div>
+          <div className='txt-name'>?</div>
           <img className='img-logout' src={logoutIcon} alt="logout" />
         </div>
         <div className='div-option'>

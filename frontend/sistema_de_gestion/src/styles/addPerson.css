@@ -242,6 +242,7 @@ input[type=number] {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   z-index: 3;
+  
 }
 
 .div-search{
@@ -290,6 +291,8 @@ input[type=number] {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: 100px;
+  padding-bottom: 20px;
 }
 
 .div-btn-submit2 button{

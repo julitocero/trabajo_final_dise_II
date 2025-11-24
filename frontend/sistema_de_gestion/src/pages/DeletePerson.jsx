@@ -94,7 +94,7 @@ function DeletePerson() {
             <div className='div-search'><div className='div-form-datos-search'><p>Ingrese el nro. de documento</p> <input type="number" placeholder='1234567890' value={ndocumentSearch} onChange={(e) => setNdocumentSearch(e.target.value)}/></div><div className='div-btn-submit2'><button onClick={() => getPerson(ndocumentSearch)}>Buscar</button></div></div>
             </div>
         <div className='div-logout'> 
-          <div className='txt-name'>{user.name}</div>
+          <div className='txt-name'>?</div>
           <img className='img-logout' src={logoutIcon}></img>
         </div>
 
