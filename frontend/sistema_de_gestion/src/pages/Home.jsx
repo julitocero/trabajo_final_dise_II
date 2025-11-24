@@ -11,39 +11,84 @@ import keyboardIcon from '../media/keyboard.svg';
 import logIcon from '../media/log.svg';
 import logoutIcon from '../media/logout.svg';
 import { useAuth } from "../AuthContext";
+import { useState, useEffect } from "react";
 
 function Home() {
-    const { user } = useAuth();
+
+  const { user } = useAuth();
   const navigate = useNavigate();
+
+  // HOOKS AQUÍ, DENTRO DEL COMPONENTE
+  const [consultasActivas, setConsultasActivas] = useState(true);
+
+  useEffect(() => {
+    // Cargar desde localStorage
+    const state = localStorage.getItem("consultasActivas");
+    if (state !== null) setConsultasActivas(state === "true");
+
+    // Consultar estado del contenedor
+    fetch("http://localhost:5005/status")
+      .then(r => r.json())
+      .then(data => {
+        setConsultasActivas(data.running);
+        localStorage.setItem("consultasActivas", data.running);
+      });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
         <Sidebar />
         <img className='img-bubble' src={bubble} alt="jeje" />
-        <div className='txt-home'>¿Qué quieres hacer hoy, {user.name}?</div>
+
+        <div className='txt-home'>
+          ¿Qué quieres hacer hoy, {user.name}?
+        </div>
+        
+        {/*
+        <div className="switch-container">
+          <span>Desactivar consultas</span>
+          <input
+            type="checkbox"
+            checked={consultasActivas}
+            onChange={async () => {
+              const newValue = !consultasActivas;
+              setConsultasActivas(newValue);
+              localStorage.setItem("consultasActivas", newValue);
+
+              if (newValue) {
+                await fetch("http://localhost:5005/start-read", { method: "POST" });
+              } else {
+                await fetch("http://localhost:5005/stop-read", { method: "POST" });
+              }
+            }}
+          />
+        </div>
+        */}
 
         <div className='div-logout'>
           <div className='txt-name'>{user.name}</div>
-          <img className='img-logout' src={logoutIcon} alt="logout" onClick={() => navigate("/login")}/>
+          <img className='img-logout' src={logoutIcon} alt="logout" onClick={() => navigate("/login")} />
         </div>
+
         <div className='div-option'>
           <div onClick={() => navigate("/add")}>
-            <Option color={1} texto="Crear Persona" icono={addPersonIcon}/>
+            <Option color={1} texto="Crear Persona" icono={addPersonIcon} />
           </div>
           <div onClick={() => navigate("/modify")}>
             <Option color={0} texto="Modificar Datos Personales" icono={modifyIcon} />
           </div>
           <div onClick={() => navigate("/delete")}>
-            <Option color={1} texto="Borrar Persona" icono={deletePersonIcon}/>
+            <Option color={1} texto="Borrar Persona" icono={deletePersonIcon} />
           </div>
           <div onClick={() => navigate("/consulta")}>
-            <Option color={0} texto="Consultar Datos" icono={queryIcon}/>
+            <Option color={0} texto="Consultar Datos" icono={queryIcon} />
           </div>
           <div onClick={() => navigate("/consultallm")}>
-            <Option color={1} texto="Consultar Datos Lenguaje Natural" icono={keyboardIcon}/>
+            <Option color={1} texto="Consultar Datos Lenguaje Natural" icono={keyboardIcon} />
           </div>
           <div onClick={() => navigate("/consultalog")}>
-            <Option color={0} texto="Consultar Log" icono={logIcon}/>
+            <Option color={0} texto="Consultar Log" icono={logIcon} />
           </div>
         </div>
       </header>

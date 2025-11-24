@@ -1,0 +1,168 @@
+version: "3.8"
+
+services:
+  auth:
+    build:
+      context: .
+      dockerfile: backend/auth/Dockerfile
+    container_name: auth
+    env_file:
+      - backend/auth/.env
+    environment:
+      - PORT=4001
+      - ROBLE_BASE_URL=${ROBLE_BASE_URL:-https://roble-api.openlab.uninorte.edu.co}
+    ports:
+      - "4001:4001"
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "--spider", "http://localhost:4001/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - appnet
+
+  logs:
+    build:
+      context: .
+      dockerfile: backend/logs/Dockerfile
+    container_name: logs
+    env_file:
+      - backend/logs/.env
+    environment:
+      - PORT=4003
+      - ROBLE_BASE_URL=${ROBLE_BASE_URL:-https://roble-api.openlab.uninorte.edu.co}
+    ports:
+      - "4003:4003"
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "--spider", "http://localhost:4003/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - appnet
+
+  persons:
+    build:
+      context: .
+      dockerfile: backend/persons/Dockerfile
+    container_name: persons
+    env_file:
+      - backend/persons/.env
+    environment:
+      - PORT=4002
+      - LOGS_SERVICE_URL=http://logs:4003/api/logs
+      - ROBLE_BASE_URL=${ROBLE_BASE_URL:-https://roble-api.openlab.uninorte.edu.co}
+    ports:
+      - "4002:4002"
+    networks:
+      - appnet
+
+  persons-create:
+    build:
+      context: .
+      dockerfile: backend/persons-create/Dockerfile
+    container_name: persons-create
+    env_file:
+      - backend/persons-create/.env
+    environment:
+      - PORT=4010
+      - LOGS_SERVICE_URL=http://logs:4003/api/logs
+      - ROBLE_BASE_URL=${ROBLE_BASE_URL:-https://roble-api.openlab.uninorte.edu.co}
+    ports:
+      - "4010:4010"
+    networks:
+      - appnet
+
+  persons-read:
+    build:
+      context: .
+      dockerfile: backend/persons-read/Dockerfile
+    container_name: persons-read
+    env_file:
+      - backend/persons-read/.env
+    environment:
+      - PORT=4011
+      - LOGS_SERVICE_URL=http://logs:4003/api/logs
+      - ROBLE_BASE_URL=${ROBLE_BASE_URL:-https://roble-api.openlab.uninorte.edu.co}
+    ports:
+      - "4011:4011"
+    networks:
+      - appnet
+    # persons-read intentionally has no depends_on so it can be stopped/started independently.
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "--spider", "http://localhost:4011/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  persons-update:
+    build:
+      context: .
+      dockerfile: backend/persons-update/Dockerfile
+    container_name: persons-update
+    env_file:
+      - backend/persons-update/.env
+    environment:
+      - PORT=4012
+      - LOGS_SERVICE_URL=http://logs:4003/api/logs
+      - ROBLE_BASE_URL=${ROBLE_BASE_URL:-https://roble-api.openlab.uninorte.edu.co}
+    ports:
+      - "4012:4012"
+    networks:
+      - appnet
+
+  persons-delete:
+    build:
+      context: .
+      dockerfile: backend/persons-delete/Dockerfile
+    container_name: persons-delete
+    env_file:
+      - backend/persons-delete/.env
+    environment:
+      - PORT=4013
+      - LOGS_SERVICE_URL=http://logs:4003/api/logs
+      - ROBLE_BASE_URL=${ROBLE_BASE_URL:-https://roble-api.openlab.uninorte.edu.co}
+    ports:
+      - "4013:4013"
+    networks:
+      - appnet
+
+  control-service:
+    build:
+      context: .
+      dockerfile: backend/control-service/Dockerfile
+    container_name: control-service
+    ports:
+      - "5005:5005"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./backend/control-service:/app
+    networks:
+      - appnet
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/sistema_de_gestion/Dockerfile
+    container_name: frontend
+    environment:
+      - PORT=3000
+      # Puedes definir la URL base de las APIs desde aquí; ejemplo para llamadas desde frontend
+      - REACT_APP_API_BASE=${REACT_APP_API_BASE:-http://localhost:4002}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - auth
+      - persons
+      - persons-read
+      - persons-create
+      - persons-update
+      - persons-delete
+      - logs
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge

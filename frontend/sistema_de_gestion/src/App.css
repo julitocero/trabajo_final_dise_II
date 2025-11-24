@@ -49,6 +49,16 @@
   text-align: start;
 }
 
+.switch-container {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  color: black;
+}
+
+
 .div-logout{
   width: auto;
   height: auto;

@@ -1,9 +1,13 @@
 // Configuración de APIs
 const API = {
     auth: 'http://localhost:4001/api/auth',
-    persons: 'http://localhost:4002/api/persons',
+    personsCreate: 'http://localhost:4010/api/persons',
+    personsRead: 'http://localhost:4011/api/persons',
+    personsUpdate: 'http://localhost:4012/api/persons',
+    personsDelete: 'http://localhost:4013/api/persons',
     logs: 'http://localhost:4003/api/logs'
 };
+
 
 // Utilidad para hacer requests
 async function apiRequest(url, options = {}) {
@@ -47,30 +51,32 @@ const AuthAPI = {
 // Módulo de Personas
 const PersonsAPI = {
     async create(personData) {
-        return apiRequest(`${API.persons}`, {
+        return apiRequest(`${API.personsCreate}`, {
             method: 'POST',
-            body: JSON.stringify({ ...personData, user_id: 1 })
+            body: JSON.stringify(personData)
         });
     },
 
     async getAll(query = '') {
-        const url = query ? `${API.persons}?${query}` : API.persons;
+        const url = query ? `${API.personsRead}?${query}` : API.personsRead;
         return apiRequest(url);
-    },
+    }
+    ,
 
     async update(id, updates) {
-        return apiRequest(`${API.persons}/${id}`, {
+        return apiRequest(`${API.personsUpdate}/${id}`, {
             method: 'PUT',
-            body: JSON.stringify({ ...updates, user_id: 1 })
-        });
-    },
-
-    async delete(id) {
-        return apiRequest(`${API.persons}/${id}`, {
-            method: 'DELETE',
-            body: JSON.stringify({ user_id: 1 })
+            body: JSON.stringify(updates)
         });
     }
+    ,
+
+    async delete(id) {
+        return apiRequest(`${API.personsDelete}/${id}`, {
+            method: 'DELETE'
+        });
+    }
+
 };
 
 // Módulo de Logs
