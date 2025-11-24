@@ -37,7 +37,7 @@ export const deletePerson = async (req, res, next) => {
                 document: `${personInfo.tdocument} ${personInfo.ndocument}`,
                 email: personInfo.email
             }
-        });
+        }, personInfo.ndocument);
 
         console.log('Log de eliminación enviado exitosamente');
         res.json({

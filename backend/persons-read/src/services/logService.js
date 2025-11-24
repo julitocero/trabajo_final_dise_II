@@ -2,13 +2,14 @@ import axios from 'axios';
 
 const LOG_SERVICE_URL = process.env.LOG_SERVICE_URL || 'http://localhost:4003/api/logs';
 
-export const logAction = async (action, userId, details) => {
+export const logAction = async (action, userId, details, ndocument = null) => {
     try {
         const response = await axios.post(LOG_SERVICE_URL, {
             action,
             user: Number(userId) || 1,
             details,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            ndocument
         });
 
         return response.data;

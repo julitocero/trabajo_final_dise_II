@@ -11,15 +11,14 @@ export const getPersons = async (req, res, next) => {
         const data = await readRecords(TABLE, req.query);
         console.log('Consulta exitosa, encontradas:', data.length, 'personas');
 
-        // Log opcional para auditoría (solo si hay filtros específicos)
+        // Log opcional solo para consultas por ndocument (según requerimiento)
         const userId = req.query.user_id || 'system';
-        if (Object.keys(req.query).length > 0 && !req.query.user_id) {
-            await logAction('READ_PERSONS_FILTERED', userId, {
-                filters: req.query,
-                count: data.length
-            });
-        } else if (Object.keys(req.query).length === 0 || (Object.keys(req.query).length === 1 && req.query.user_id)) {
-            await logAction('READ_ALL_PERSONS', userId, { count: data.length });
+        if (req.query.ndocument) {
+            await logAction('READ_PERSON_BY_DOCUMENT', userId, {
+                document: req.query.ndocument,
+                count: data.length,
+                filters: req.query
+            }, req.query.ndocument);
         }
 
         res.json({ success: true, data });
@@ -51,7 +50,7 @@ export const getPersonById = async (req, res, next) => {
         await logAction('READ_PERSON_BY_ID', userId, {
             personId: id,
             name: `${data[0].fname} ${data[0].lname}`
-        });
+        }, data[0].ndocument);
 
         res.json({ success: true, data: data[0] });
     } catch (error) {
@@ -82,7 +81,7 @@ export const getPersonByDocument = async (req, res, next) => {
         await logAction('READ_PERSON_BY_DOCUMENT', userId, {
             document: ndocument,
             name: `${data[0].fname} ${data[0].lname}`
-        });
+        }, ndocument);
 
         res.json({ success: true, data: data[0] });
     } catch (error) {

@@ -270,6 +270,19 @@ GET http://localhost:4003/api/logs?user=12&action=CREATE_PERSON&dateFrom=2024-12
 
 // Solo logs de hoy
 GET http://localhost:4003/api/logs?dateFrom=2025-11-22&dateTo=2025-11-22
+
+// Logs por número de documento específico
+GET http://localhost:4003/api/logs?ndocument=1234567890
+
+// Logs por número de documento en rango de fechas
+GET http://localhost:4003/api/logs?ndocument=1234567890&dateFrom=2024-01-01&dateTo=2024-12-31
+```
+
+**Nota importante sobre logs y ndocument:**
+- Los logs ahora incluyen el campo `ndocument` cuando la operación se refiere a una persona específica
+- En **persons-read**: Solo se registran logs cuando la consulta incluye `ndocument` como filtro
+- En **persons-create/update/delete**: Siempre se registra el ndocument de la persona afectada
+- Esto permite rastrear todas las operaciones realizadas sobre una persona específica
 ```
 
 ## Migración desde el Servicio Monolítico

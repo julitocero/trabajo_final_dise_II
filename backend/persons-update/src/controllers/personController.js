@@ -162,7 +162,7 @@ export const updatePerson = async (req, res, next) => {
             updatedFields: Object.keys(updateData),
             oldName: `${existingPerson[0].fname} ${existingPerson[0].lname}`,
             newName: `${updateData.fname || existingPerson[0].fname} ${updateData.lname || existingPerson[0].lname}`
-        });
+        }, existingPerson[0].ndocument);
 
         console.log('Log de actualización enviado exitosamente');
         res.json({ success: true, data });
