@@ -1,5 +1,6 @@
 import '../styles/addPerson.css';
 import Sidebar from '../components/Sidebar';
+import { Routes, Route, useNavigate } from "react-router-dom";
 import bubble from '../media/bubble.svg'
 import logoutIcon from '../media/logout.svg'
 import FilterTable from '../components/FilterTable.jsx'
@@ -8,8 +9,9 @@ import { useAuth } from "../AuthContext";
 import { useState } from 'react';
 
 function ConsultaLog() {
-
-  const [dataPersons, setDataPersons] = useState([])
+  const navigate = useNavigate();
+  const [dataPersons, setDataPersons] = useState([]);
+  const { user } = useAuth();
   const getPersons = async () => {
   try {
     const response = await fetch(`http://localhost:4011/persons`);
@@ -39,13 +41,6 @@ function seleccionarColumnas(data, columnas) {
     return nuevo;
   });
 }
-
-
-  const logs = [
-        { name: "Julio", action: "Login", date: "2025-11-22" },
-        { name: "Ana", action: "Create User", date: "2025-11-21" }
-    ];
-  const { user } = useAuth();
   return (
     <div className="main-body-add">
       <header className="add-header">
@@ -60,8 +55,8 @@ function seleccionarColumnas(data, columnas) {
             </div>
           </div>
         <div className='div-logout'> 
-          <div className='txt-name'>name</div>
-          <img className='img-logout' src={logoutIcon}></img>
+          <div className='txt-name'>{user.name}</div>
+          <img className='img-logout' src={logoutIcon} onClick={() => navigate("/login")}></img>
         </div>
         <div className='div-body'>
             <FilterTable data={dataPersons}  />

@@ -4,7 +4,9 @@ import bubble from '../media/bubble.svg'
 import logoutIcon from '../media/logout.svg'
 import photoIcon from '../media/photo.svg'
 import { useAuth } from "../AuthContext";
+import { Routes, Route, useNavigate } from "react-router-dom";
 function Add() {
+  const navigate = useNavigate();
   const { user } = useAuth();
   return (
     <div className="main-body-add">
@@ -14,7 +16,7 @@ function Add() {
         <div className='txt-home'>Consulta de Datos - Lenguaje Natural</div>
         <div className='div-logout'> 
           <div className='txt-name'>{user.name}</div>
-          <img className='img-logout' src={logoutIcon}></img>
+          <img className='img-logout' src={logoutIcon} onClick={() => navigate("/login")}></img>
         </div>
         <div className='div-body'>
             <div className='div-consultallm'>

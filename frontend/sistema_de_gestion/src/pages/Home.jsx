@@ -20,11 +20,11 @@ function Home() {
       <header className="App-header">
         <Sidebar />
         <img className='img-bubble' src={bubble} alt="jeje" />
-        <div className='txt-home'>¿Qué quieres hacer hoy, ?</div>
+        <div className='txt-home'>¿Qué quieres hacer hoy, {user.name}?</div>
 
         <div className='div-logout'>
-          <div className='txt-name'>?</div>
-          <img className='img-logout' src={logoutIcon} alt="logout" />
+          <div className='txt-name'>{user.name}</div>
+          <img className='img-logout' src={logoutIcon} alt="logout" onClick={() => navigate("/login")}/>
         </div>
         <div className='div-option'>
           <div onClick={() => navigate("/add")}>

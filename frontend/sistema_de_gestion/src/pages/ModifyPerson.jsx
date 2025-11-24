@@ -1,4 +1,5 @@
 import '../styles/addPerson.css';
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Sidebar from '../components/Sidebar';
 import bubble from '../media/bubble.svg'
 import logoutIcon from '../media/logout.svg'
@@ -8,6 +9,7 @@ import { useAuth } from "../AuthContext";
 
 
 function ModifyPerson() {
+  const navigate = useNavigate();
 const { user } = useAuth();
 console.log("userid:", user)
 const [userID, setUserID] = useState("")
@@ -26,7 +28,7 @@ const [data, setData] =  useState([]);
 const [idPerson, setIdPerson] = useState("")
 const [foto, setFoto] = useState("");
 
-
+console.log(user.id)
 const getPerson = async (document) => {
   try {
     const response = await fetch(`http://localhost:4011/persons?ndocument=${document}`);
@@ -123,8 +125,8 @@ console.log("cel:",cel)
             <div className='div-search'><div className='div-form-datos-search'><p>Ingrese el nro. de documento</p> <input type="number" placeholder='1234567890' onChange={(e) => setNdocumentSearch(e.target.value)}/></div><div className='div-btn-submit2'><button onClick={() => getPerson(ndocumentSearch)}>Buscar</button></div></div>
             </div>
         <div className='div-logout'> 
-          <div className='txt-name'>name</div>
-          <img className='img-logout' src={logoutIcon}></img>
+          <div className='txt-name'>{user.name}</div>
+          <img className='img-logout' src={logoutIcon} onClick={() => navigate("/login")}></img>
         </div>
 
         <div className='div-body'>

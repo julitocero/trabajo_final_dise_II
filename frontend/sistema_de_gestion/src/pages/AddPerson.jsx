@@ -1,4 +1,5 @@
 import '../styles/addPerson.css';
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Sidebar from '../components/Sidebar';
 import bubble from '../media/bubble.svg'
 import logoutIcon from '../media/logout.svg'
@@ -7,6 +8,7 @@ import { useState } from 'react';
 import { useAuth } from "../AuthContext";
 
 function Add() {
+  const navigate = useNavigate();
 const { user } = useAuth();
 const [userID, setUserID] = useState("");
 const [tdocument, setTdocument] = useState("");
@@ -18,12 +20,13 @@ const [bday, setBday] = useState("");
 const [gender, setGender] = useState("");
 const [email, setEmail] = useState("");
 const [cel, setCel] = useState("");
-  const [preview, setPreview] = useState( null );
+const [preview, setPreview] = useState( null );
+console.log(user.id)
 
 const handleCreateUser = async () => {
   const user_id = user.id
   const img_Url =  preview
-  console.log(user_id)
+  
   console.log("gendero",gender)
   const body = {
     tdocument,
@@ -36,7 +39,7 @@ const handleCreateUser = async () => {
     email,
     cel,
     img_Url,
-    user_id
+    user_id 
   };
   console.log("gendero",gender)
   try {
@@ -84,8 +87,8 @@ const onChangeFile = (e) => {
         <img className='img-bubble' src={bubble} alt="jeje" />
         <div className='txt-home'>Crear Persona</div>
         <div className='div-logout'> 
-          <div className='txt-name'>julio</div>
-          <img className='img-logout' src={logoutIcon}></img>
+          <div className='txt-name'>{user.name}</div>
+          <img className='img-logout' src={logoutIcon} onClick={() => navigate("/login")}></img>
         </div>
         <div className='div-body'>
             <div className='div-form-add'>

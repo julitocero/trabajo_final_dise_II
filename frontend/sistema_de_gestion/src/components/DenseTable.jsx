@@ -10,8 +10,6 @@ export default function TableDynamic({ data = [] }) {
   if (!Array.isArray(data) || data.length === 0) {
     return <p>No hay datos para mostrar</p>;
   }
-
-  // Normalizar: si viene "details" en string, convertirlo a JSON objeto
   const normalizedData = data.map((item) => {
     const newItem = { ...item };
 
@@ -19,14 +17,11 @@ export default function TableDynamic({ data = [] }) {
       try {
         newItem.details = JSON.parse(newItem.details);
       } catch (e) {
-        // si no parsea, dejarlo como está
       }
     }
 
     return newItem;
   });
-
-  // Encabezados: incluir claves normales + expandir las de details
   const baseHeaders = Object.keys(normalizedData[0]).filter(
     (key) => key !== "details"
   );
@@ -59,11 +54,17 @@ export default function TableDynamic({ data = [] }) {
                   {row[header]}
                 </TableCell>
               ))}
-
-              {/* columnas del JSON interno "details" */}
               {detailHeaders.map((detailKey) => (
                 <TableCell key={detailKey}>
-                  {row.details?.[detailKey] ?? ""}
+                  {(() => {
+                            const value = row.details?.[detailKey];
+
+                            if (typeof value === "object" && value !== null) {
+                              return JSON.stringify(value);   // el update llega con un formato diferente asi que tuve que probar esto
+                            }
+
+                            return value ?? "";
+                          })()}
                 </TableCell>
               ))}
             </TableRow>

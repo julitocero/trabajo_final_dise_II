@@ -5,7 +5,9 @@ import logoutIcon from '../media/logout.svg'
 import photoIcon from '../media/photo.svg'
 import { useState } from 'react';
 import { useAuth } from "../AuthContext";
+import { Routes, Route, useNavigate } from "react-router-dom";
 function DeletePerson() {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [ndocumentSearch, setNdocumentSearch] = useState("");
   const [tdocument, setTdocument] = useState("");
@@ -19,7 +21,7 @@ function DeletePerson() {
   const [cel, setCel] = useState("");
   const [idPerson, setIdPerson] = useState("")
   const [foto, setFoto] = useState("");
-  
+  console.log(user.id)
 
   const getPerson = async (document) => {
   try {
@@ -90,12 +92,12 @@ function DeletePerson() {
         <Sidebar />
         <img className='img-bubble' src={bubble} alt="jeje" />
         <div className='txt-home2'>
-            <p>Modificar Persona</p>
+            <p>Borrar Persona</p>
             <div className='div-search'><div className='div-form-datos-search'><p>Ingrese el nro. de documento</p> <input type="number" placeholder='1234567890' value={ndocumentSearch} onChange={(e) => setNdocumentSearch(e.target.value)}/></div><div className='div-btn-submit2'><button onClick={() => getPerson(ndocumentSearch)}>Buscar</button></div></div>
             </div>
         <div className='div-logout'> 
-          <div className='txt-name'>?</div>
-          <img className='img-logout' src={logoutIcon}></img>
+          <div className='txt-name'>{user.name}</div>
+          <img className='img-logout' src={logoutIcon} onClick={() => navigate("/login")}></img>
         </div>
 
         <div className='div-body'>
